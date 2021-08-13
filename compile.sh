@@ -13,6 +13,15 @@
 #export CPATH="/home/work/cuda-9.2/include"
 #export CUDNN_INCLUDE_DIR="/home/work/cudnn/cudnn_v7/include"
 #export CUDNN_LIB_DIR="/home/work/cudnn/cudnn_v7/lib64"
+
+# GPU 32GB
+export LD_LIBRARY_PATH="/home/duyanh/anaconda3/lib:$LD_LIBRARY_PATH"
+export LD_INCLUDE_PATH="/home/duyanh/anaconda3/include:$LD_INCLUDE_PATH"
+export CUDA_HOME="/usr/local/cuda-11.0"
+export PATH="/home/duyanh/anaconda3/bin:/usr/local/cuda-11.0/bin:$PATH"
+export CPATH="/usr/local/cuda-11.0/include"
+export CUDNN_LIB_DIR="/usr/local/cuda-11.0/lib64"
+
 TORCH=$(python -c "import os; import torch; print(os.path.dirname(torch.__file__))")
 #echo $TORCH
 cd libs/GANet
