@@ -22,7 +22,8 @@ export PATH="/home/tung/anaconda3/bin:/usr/local/cuda-10.2/bin:$PATH"
 export CPATH="/usr/local/cuda-10.2/include"
 export CUDNN_LIB_DIR="/usr/local/cuda-10.2/lib64"
 
-TORCH=$(python -c "import os; import torch; print(os.path.dirname(torch.__file__))")
+## TORCH=$(python -c "import os; import torch; print(os.path.dirname(torch.__file__))")
+TORCH="/home/tung/anaconda3/envs/ganet/lib/python3.7/site-packages/torch"
 echo $TORCH
 cd libs/GANet
 python setup.py clean
