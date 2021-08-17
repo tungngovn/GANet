@@ -23,7 +23,7 @@ export CPATH="/usr/local/cuda-10.2/include"
 export CUDNN_LIB_DIR="/usr/local/cuda-10.2/lib64"
 
 TORCH=$(python -c "import os; import torch; print(os.path.dirname(torch.__file__))")
-#echo $TORCH
+echo $TORCH
 cd libs/GANet
 python setup.py clean
 rm -rf build
