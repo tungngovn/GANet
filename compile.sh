@@ -15,12 +15,12 @@
 #export CUDNN_LIB_DIR="/home/work/cudnn/cudnn_v7/lib64"
 
 # GPU 32GB
-export LD_LIBRARY_PATH="/home/tung/anaconda3/lib:$LD_LIBRARY_PATH"
-export LD_INCLUDE_PATH="/home/tung/anaconda3/include:$LD_INCLUDE_PATH"
-export CUDA_HOME="/usr/local/cuda-10.2"
-export PATH="/home/tung/anaconda3/bin:/usr/local/cuda-10.2/bin:$PATH"
-export CPATH="/usr/local/cuda-10.2/include"
-export CUDNN_LIB_DIR="/usr/local/cuda-10.2/lib64"
+# export LD_LIBRARY_PATH="/home/tung/anaconda3/lib:$LD_LIBRARY_PATH"
+# export LD_INCLUDE_PATH="/home/tung/anaconda3/include:$LD_INCLUDE_PATH"
+# export CUDA_HOME="/usr/local/cuda-10.2"
+# export PATH="/home/tung/anaconda3/bin:/usr/local/cuda-10.2/bin:$PATH"
+# export CPATH="/usr/local/cuda-10.2/include"
+# export CUDNN_LIB_DIR="/usr/local/cuda-10.2/lib64"
 
 TORCH=$(python -c "import os; import torch; print(os.path.dirname(torch.__file__))")
 ## TORCH="/home/tung/anaconda3/envs/ganet/lib/python3.7/site-packages/torch"
