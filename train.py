@@ -83,13 +83,14 @@ if opt.resume:
 
 
 def train(epoch):
-    print("Training epoch: ", epoch)
+    print("Training epoch: ", epoch) ## Add to debug
     epoch_loss = 0
     epoch_error0 = 0
     epoch_error1 = 0
     epoch_error2 = 0
     valid_iteration = 0
     model.train()
+    print("Done train epoch:", epoch) ## Print to debug
     for iteration, batch in enumerate(training_data_loader):
         input1, input2, target = Variable(batch[0], requires_grad=True), Variable(batch[1], requires_grad=True), Variable(batch[2], requires_grad=False)
         if cuda:
