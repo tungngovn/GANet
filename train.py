@@ -83,6 +83,7 @@ if opt.resume:
 
 
 def train(epoch):
+    print("Training epoch: ", epoch)
     epoch_loss = 0
     epoch_error0 = 0
     epoch_error1 = 0
