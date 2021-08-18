@@ -113,7 +113,7 @@ def test_transform(temp_data, crop_height, crop_width, left_right=False):
   #  sign=np.ones([1,1,1],'float32')*-1
     return left, right, target
 
-
+'''
 def load_data(data_path, current_file):
     A = current_file
     filename = data_path + 'frames_finalpass/' + A[0: len(A) - 1]
@@ -145,6 +145,48 @@ def load_data(data_path, current_file):
     temp_data[6: 7, :, :] = width * 2
     temp_data[6, :, :] = disp_left
     temp_data[7, :, :] = disp_right
+    return temp_data
+'''
+
+## Edit to apolloscape dataset from SceneFlow
+def load_data(data_path, current_file):
+    A = current_file
+    filename = data_path + 'stereo_train/camera_5/' + A[0: len(A) - 6] + '5.jpg'
+    left  =Image.open(filename)
+    filename = data_path + 'stereo_train/camera_6/' + A[0: len(A) - 6] + '6.jpg'
+    right = Image.open(filename)
+    filename = data_path + 'stereo_train/disparity/' + A[0: len(A) - 1]
+
+    disp_left = Image.open(filename)
+    temp = np.asarray(disp_left)
+    size = np.shape(left)
+
+    height = size[0]
+    width = size[1]
+    temp_data = np.zeros([8, height, width], 'float32')
+    left = np.asarray(left)
+    right = np.asarray(right)
+    disp_left = np.asarray(disp_left)
+    r = left[:, :, 0]
+    g = left[:, :, 1]
+    b = left[:, :, 2]
+ 
+    temp_data[0, :, :] = (r-np.mean(r[:])) / np.std(r[:])
+    temp_data[1, :, :] = (g-np.mean(g[:])) / np.std(g[:])
+    temp_data[2, :, :] = (b-np.mean(b[:])) / np.std(b[:])
+    r=right[:, :, 0]
+    g=right[:, :, 1]
+    b=right[:, :, 2]    
+
+    temp_data[3, :, :] = (r - np.mean(r[:])) / np.std(r[:])
+    temp_data[4, :, :] = (g - np.mean(g[:])) / np.std(g[:])
+    temp_data[5, :, :] = (b - np.mean(b[:])) / np.std(b[:])
+    temp_data[6: 7, :, :] = width * 2
+    temp_data[6, :, :] = disp_left[:, :]
+    temp = temp_data[6, :, :]
+    temp[temp < 0.1] = width * 2 * 256
+    temp_data[6, :, :] = temp / 256.
+    
     return temp_data
 
 

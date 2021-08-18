@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --batchSize=4 \
+                --crop_height=384 \
+                --crop_width=1248 \
+                --max_disp=192 \
+                --thread=16 \
+                --data_path='./dataset/apolloscape/' \
+                --training_list='lists/apolloscape_train.list' \
+                --save_path='./checkpoint/apolloscape_check' \
+                --resume='./pretrained/sceneflow_epoch_10.pth' \
+                --lr=0.0001 \
+                --model='GANet_deep' \
+                --nEpochs=10 2>&1 |tee logs/log_finetune_apolloscape.txt
