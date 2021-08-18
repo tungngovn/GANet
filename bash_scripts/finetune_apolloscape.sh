@@ -1,8 +1,8 @@
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --batchSize=4 \
-                --crop_height=384 \
-                --crop_width=1248 \
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --batchSize=1 \
+                --crop_height=240 \
+                --crop_width=480 \
                 --max_disp=192 \
-                --thread=16 \
+                --thread=1 \
                 --data_path='./dataset/apolloscape/' \
                 --training_list='lists/apolloscape_train.list' \
                 --save_path='./checkpoint/apolloscape_check' \
