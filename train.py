@@ -97,6 +97,8 @@ def train(epoch):
             target = target.cuda()
 
         target=torch.squeeze(target,1)
+        print('target shape: ')
+        print(target.shape) ## Print to debug
         mask = target < opt.max_disp
         mask.detach_()
         valid = target[mask].size()[0]
