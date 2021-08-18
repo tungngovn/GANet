@@ -92,11 +92,13 @@ def train(epoch):
     model.train()
     print("Done train epoch:", epoch) ## Print to debug
     for iteration, batch in enumerate(training_data_loader):
+        print("In the for loop")
         input1, input2, target = Variable(batch[0], requires_grad=True), Variable(batch[1], requires_grad=True), Variable(batch[2], requires_grad=False)
         if cuda:
             input1 = input1.cuda()
             input2 = input2.cuda()
             target = target.cuda()
+            print("if cuda")
 
         target=torch.squeeze(target,1)
         print('target shape: ')
