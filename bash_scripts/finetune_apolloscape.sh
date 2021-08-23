@@ -2,10 +2,11 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --batchSize=1 \
                 --crop_height=240 \
                 --crop_width=480 \
                 --max_disp=192 \
-                --thread=1 \
+                --threads=8 \
                 --data_path='./dataset/apolloscape/' \
                 --training_list='lists/apolloscape_train.list' \
-                --save_path='./checkpoint/apolloscape_check' \
+                --val_list='lists/apolloscape_val.list' \
+                --save_path='./checkpoint/apolloscape_check/' \
                 --resume='./pretrained/sceneflow_epoch_10.pth' \
                 --lr=0.0001 \
                 --model='GANet_deep' \
