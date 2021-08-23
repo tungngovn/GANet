@@ -292,17 +292,21 @@ class DatasetFromList(data.Dataset):
 
     def __getitem__(self, index):
     #    print self.file_list[index]
+        print("Getting item") ## Print to debug
         if self.kitti: #load kitti dataset
             temp_data = load_kitti_data(self.data_path, self.file_list[index])
         elif self.kitti2015: #load kitti2015 dataset
             temp_data = load_kitti2015_data(self.data_path, self.file_list[index])
         else: #load scene flow dataset
+            print("Not kitti dataset ") ## Print to debug
             temp_data = load_data(self.data_path, self.file_list[index])
 #        temp_data = load_data(self.data_path,self.file_list[index])
         if self.training:
+            print("self training") ## Print to debug
             input1, input2, target = train_transform(temp_data, self.crop_height, self.crop_width, self.left_right, self.shift)
             return input1, input2, target
         else:
+            print(" testing") ## Print to debug
             input1, input2, target = test_transform(temp_data, self.crop_height, self.crop_width)
             return input1, input2, target
 
