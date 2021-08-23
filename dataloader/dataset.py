@@ -150,7 +150,7 @@ def load_data(data_path, current_file):
 
 ## Edit to apolloscape dataset from SceneFlow
 def load_data(data_path, current_file):
-    print("Start loading dataset")
+    # print("Start loading dataset") ## Print to debug
     A = current_file
     filename = data_path + 'stereo_train/camera_5/' + A[0: len(A) - 6] + '5.jpg'
     left  =Image.open(filename)
@@ -164,7 +164,7 @@ def load_data(data_path, current_file):
 
     height = size[0]
     width = size[1]
-    print("Done load images") ## Print to debug
+    # print("Done load images") ## Print to debug
     temp_data = np.zeros([8, height, width], 'float32')
     left = np.asarray(left)
     right = np.asarray(right)
@@ -189,7 +189,7 @@ def load_data(data_path, current_file):
     temp[temp < 0.1] = width * 2 * 256
     temp_data[6, :, :] = temp / 256.
     
-    print("Load data successful ", temp_data.shape) ## Print to debug
+    # print("Load data successful ", temp_data.shape) ## Print to debug
 
     return temp_data
 
@@ -291,24 +291,24 @@ class DatasetFromList(data.Dataset):
         self.kitti = kitti
         self.kitti2015 = kitti2015
         self.shift = shift
-        print("Done init dataset") ## Print to debug
+        # print("Done init dataset") ## Print to debug
 
     def __getitem__(self, index):
         #    print self.file_list[index]
-        print("Getting item") ## Print to debug
+        # print("Getting item") ## Print to debug
         if self.kitti: #load kitti dataset
             temp_data = load_kitti_data(self.data_path, self.file_list[index])
         elif self.kitti2015: #load kitti2015 dataset
             temp_data = load_kitti2015_data(self.data_path, self.file_list[index])
         else: #load scene flow dataset
-            print("Not kitti dataset ") ## Print to debug
+            # print("Not kitti dataset ") ## Print to debug
             temp_data = load_data(self.data_path, self.file_list[index])
         if self.training:
-            print("self training") ## Print to debug
+            # print("self training") ## Print to debug
             input1, input2, target = train_transform(temp_data, self.crop_height, self.crop_width, self.left_right, self.shift)
             return input1, input2, target
         else:
-            print(" testing") ## Print to debug
+            # print(" testing") ## Print to debug
             input1, input2, target = test_transform(temp_data, self.crop_height, self.crop_width)
             return input1, input2, target
 

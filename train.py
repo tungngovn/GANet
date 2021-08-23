@@ -98,7 +98,7 @@ def train(epoch):
     # print("After model.train") ## Print to debug
     # print(len(training_data_loader)) ## Print to debug
     for iteration, batch in enumerate(training_data_loader):
-        print("Start iteration")
+        # print("Start iteration") ## Print to debug
         input1, input2, target = Variable(batch[0], requires_grad=True), Variable(batch[1], requires_grad=True), Variable(batch[2], requires_grad=False)
         if cuda:
             input1 = input1.cuda()
