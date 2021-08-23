@@ -85,6 +85,8 @@ if opt.resume:
         print("=> no checkpoint found at '{}'".format(opt.resume))
 
 
+lr = opt.lr ## Init learning rate
+
 def train(epoch):
     print("Start training") ## Print to debug
     epoch_loss = 0
@@ -179,11 +181,15 @@ def save_checkpoint(save_path, epoch,state, is_best):
         shutil.copyfile(filename, save_path + '_best.pth')
     print("Checkpoint saved to {}".format(filename))
 
+
 def adjust_learning_rate(optimizer, epoch):
-    if epoch <= 400:
-       lr = opt.lr
-    else:
-       lr = opt.lr*0.1
+    global lr
+    if (epoch%10==0):
+        lr = lr*0.1
+    # if epoch <= 400:
+    #    lr = opt.lr
+    # else:
+    #    lr = opt.lr*0.1
     print(lr)
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
