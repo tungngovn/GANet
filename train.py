@@ -65,7 +65,7 @@ train_set = get_training_set(opt.data_path, opt.training_list, [opt.crop_height,
 test_set = get_test_set(opt.data_path, opt.val_list, [576,960], opt.left_right, opt.kitti, opt.kitti2015)
 training_data_loader = DataLoader(dataset=train_set, num_workers=opt.threads, batch_size=opt.batchSize, shuffle=True, drop_last=True)
 testing_data_loader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.testBatchSize, shuffle=False)
-print("train set: ", train_set.data_path)
+print("train loader: ", training_data_loader) ## Print to debug
 
 print('===> Building model')
 model = GANet(opt.max_disp)
@@ -92,8 +92,8 @@ def train(epoch):
     epoch_error2 = 0
     valid_iteration = 0
     model.train()
-    print("After model.train")
-    print(training_data_loader)
+    print("After model.train") ## Print to debug
+    print(training_data_loader) ## Print to debug
     for iteration, batch in enumerate(training_data_loader):
         print("Start iteration")
         input1, input2, target = Variable(batch[0], requires_grad=True), Variable(batch[1], requires_grad=True), Variable(batch[2], requires_grad=False)
