@@ -187,6 +187,8 @@ def load_data(data_path, current_file):
     temp[temp < 0.1] = width * 2 * 256
     temp_data[6, :, :] = temp / 256.
     
+    print("Load data successful ", temp_data.shape) ## Print to debug
+
     return temp_data
 
 
