@@ -150,6 +150,7 @@ def load_data(data_path, current_file):
 
 ## Edit to apolloscape dataset from SceneFlow
 def load_data(data_path, current_file):
+    print("Start loading dataset")
     A = current_file
     filename = data_path + 'stereo_train/camera_5/' + A[0: len(A) - 6] + '5.jpg'
     left  =Image.open(filename)
@@ -163,6 +164,7 @@ def load_data(data_path, current_file):
 
     height = size[0]
     width = size[1]
+    print("Done load images") ## Print to debug
     temp_data = np.zeros([8, height, width], 'float32')
     left = np.asarray(left)
     right = np.asarray(right)
