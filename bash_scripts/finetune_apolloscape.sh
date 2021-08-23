@@ -1,6 +1,6 @@
-CUDA_VISIBLE_DEVICES=1,2,3 python train.py --batchSize=3 \
-                --crop_height=384 \
-                --crop_width=768 \
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --batchSize=3 \
+                --crop_height=288 \
+                --crop_width=576 \
                 --max_disp=192 \
                 --threads=8 \
                 --data_path='./dataset/apolloscape/' \
