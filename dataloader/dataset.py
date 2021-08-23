@@ -282,8 +282,8 @@ class DatasetFromList(data.Dataset):
         f = open(file_list, 'r')
         self.data_path = data_path
         self.file_list = f.readlines()
-        print("file_list: ") ## Print to debug
-        print(self.file_list) ## Print to debug
+        # print("file_list: ") ## Print to debug
+        # print(self.file_list) ## Print to debug
         self.training = training
         self.crop_height = crop_size[0]
         self.crop_width = crop_size[1]
