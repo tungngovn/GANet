@@ -62,7 +62,7 @@ if cuda:
 print('===> Loading datasets')
 train_set = get_training_set(opt.data_path, opt.training_list, [opt.crop_height, opt.crop_width], opt.left_right, opt.kitti, opt.kitti2015, opt.shift)
 test_set = get_test_set(opt.data_path, opt.val_list, [576,960], opt.left_right, opt.kitti, opt.kitti2015)
-training_data_loader = DataLoader(dataset=train_set, num_workers=opt.threads, batch_size=4, shuffle=True, drop_last=True)
+training_data_loader = DataLoader(dataset=train_set, num_workers=opt.threads, batch_size=opt.batchSize, shuffle=True, drop_last=True)
 testing_data_loader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.testBatchSize, shuffle=False)
 
 print('===> Building model')
@@ -83,28 +83,25 @@ if opt.resume:
 
 
 def train(epoch):
-    print("Training epoch: ", epoch) ## Add to debug
     epoch_loss = 0
     epoch_error0 = 0
     epoch_error1 = 0
     epoch_error2 = 0
     valid_iteration = 0
     model.train()
-    print("Done train epoch:", epoch) ## Print to debug
     for iteration, batch in enumerate(training_data_loader):
-        print("In the for loop")
         input1, input2, target = Variable(batch[0], requires_grad=True), Variable(batch[1], requires_grad=True), Variable(batch[2], requires_grad=False)
         if cuda:
             input1 = input1.cuda()
             input2 = input2.cuda()
             target = target.cuda()
-            print("if cuda")
 
         target=torch.squeeze(target,1)
         print('target shape: ')
         print(target.shape) ## Print to debug
         mask = target < opt.max_disp
         mask.detach_()
+        print("Done mask") ## Print to debug
         valid = target[mask].size()[0]
         if valid > 0:
             optimizer.zero_grad()
@@ -117,6 +114,7 @@ def train(epoch):
                 else:
                     loss = 0.4 * F.smooth_l1_loss(disp1[mask], target[mask], reduction='mean') + 1.2 * F.smooth_l1_loss(disp2[mask], target[mask], reduction='mean')
             elif opt.model == 'GANet_deep':
+                print("GANet_deep") ## Print to debug
                 disp0, disp1, disp2 = model(input1, input2)
                 if opt.kitti or opt.kitti2015:
                     loss = 0.2 * F.smooth_l1_loss(disp0[mask], target[mask], reduction='mean') + 0.6 * F.smooth_l1_loss(disp1[mask], target[mask], reduction='mean') +  criterion(disp2[mask], target[mask])
@@ -202,7 +200,7 @@ if __name__ == '__main__':
                         'optimizer' : optimizer.state_dict(),
                     }, is_best)
         else:
-            if epoch>=8:
+            if epoch>=1:
                 save_checkpoint(opt.save_path, epoch,{
                         'epoch': epoch,
                         'state_dict': model.state_dict(),
