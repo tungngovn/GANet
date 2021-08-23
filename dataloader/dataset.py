@@ -294,7 +294,7 @@ class DatasetFromList(data.Dataset):
         print("Done init dataset") ## Print to debug
 
     def __getitem__(self, index):
-    #    print self.file_list[index]
+        #    print self.file_list[index]
         print("Getting item") ## Print to debug
         if self.kitti: #load kitti dataset
             temp_data = load_kitti_data(self.data_path, self.file_list[index])
@@ -303,7 +303,6 @@ class DatasetFromList(data.Dataset):
         else: #load scene flow dataset
             print("Not kitti dataset ") ## Print to debug
             temp_data = load_data(self.data_path, self.file_list[index])
-#        temp_data = load_data(self.data_path,self.file_list[index])
         if self.training:
             print("self training") ## Print to debug
             input1, input2, target = train_transform(temp_data, self.crop_height, self.crop_width, self.left_right, self.shift)
