@@ -150,10 +150,11 @@ def train(epoch):
             epoch_error0 += error0.item()
             epoch_error1 += error1.item()
             epoch_error2 += error2.item()
-            train_writer.add_scalar('train_loss', loss.item(), iteration) ## Plot iter train loss
-            train_writer.add_scalar('error0_train', error0.item(), iteration) ## Plot iter train error0
-            train_writer.add_scalar('error1_train', error1.item(), iteration) ## Plot iter train error1
-            train_writer.add_scalar('error2_train', error2.item(), iteration) ## Plot iter train error2     
+            real_iter = (epoch-1)*len(training_data_loader)+iteration
+            train_writer.add_scalar('train_loss', loss.item(), real_iter) ## Plot iter train loss
+            train_writer.add_scalar('error0_train', error0.item(), real_iter) ## Plot iter train error0
+            train_writer.add_scalar('error1_train', error1.item(), real_iter) ## Plot iter train error1
+            train_writer.add_scalar('error2_train', error2.item(), real_iter) ## Plot iter train error2     
             print("===> Epoch[{}]({}/{}): Loss: {:.4f}, Error: ({:.4f} {:.4f} {:.4f})".format(epoch, iteration, len(training_data_loader), loss.item(), error0.item(), error1.item(), error2.item()))
             sys.stdout.flush()
 
