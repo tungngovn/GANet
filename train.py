@@ -17,6 +17,8 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as F
 from dataloader.data import get_training_set, get_test_set
 
+from torch.utils.tensorboard import SummaryWriter ## Use tensorboard to plot training 
+
 # Training settings
 parser = argparse.ArgumentParser(description='PyTorch GANet Example')
 parser.add_argument('--crop_height', type=int, required=True, help="crop height")
@@ -84,6 +86,11 @@ if opt.resume:
     else:
         print("=> no checkpoint found at '{}'".format(opt.resume))
 
+## Define checkpoints folder to use tensorboard
+checkpoint_dir = opt.save_path
+train_writer = SummaryWriter(checkpoint_dir)
+## End defining checkpoints folder
+
 
 lr = opt.lr ## Init learning rate
 
@@ -142,11 +149,19 @@ def train(epoch):
             valid_iteration += 1
             epoch_error0 += error0.item()
             epoch_error1 += error1.item()
-            epoch_error2 += error2.item()      
+            epoch_error2 += error2.item()
+            train_writer.add_scalar('train_loss', loss.item(), iteration) ## Plot iter train loss
+            train_writer.add_scalar('error0_train', error0.item(), iteration) ## Plot iter train error0
+            train_writer.add_scalar('error1_train', error1.item(), iteration) ## Plot iter train error1
+            train_writer.add_scalar('error2_train', error2.item(), iteration) ## Plot iter train error2     
             print("===> Epoch[{}]({}/{}): Loss: {:.4f}, Error: ({:.4f} {:.4f} {:.4f})".format(epoch, iteration, len(training_data_loader), loss.item(), error0.item(), error1.item(), error2.item()))
             sys.stdout.flush()
 
     print("===> Epoch {} Complete: Avg. Loss: {:.4f}, Avg. Error: ({:.4f} {:.4f} {:.4f})".format(epoch, epoch_loss / valid_iteration,epoch_error0/valid_iteration,epoch_error1/valid_iteration,epoch_error2/valid_iteration))
+    train_writer.add_scalar('Avg_Epoch_loss', epoch_loss / valid_iteration, epoch) ## Plot epoch loss
+    train_writer.add_scalar('Avg_Epoch_error0', epoch_error0/valid_iteration, epoch) ## Plot epoch error0
+    train_writer.add_scalar('Avg_Epoch_error1', epoch_error1/valid_iteration, epoch) ## Plot epoch error1
+    train_writer.add_scalar('Avg_Epoch_error2', epoch_error2/valid_iteration, epoch) ## Plot epoch error2
 
 def val():
     epoch_error2 = 0
@@ -172,6 +187,7 @@ def val():
                 print("===> Test({}/{}): Error: ({:.4f})".format(iteration, len(testing_data_loader), error2.item()))
 
     print("===> Test: Avg. Error: ({:.4f})".format(epoch_error2 / valid_iteration))
+    train_writer.add_scalar('Avg_Test_error', epoch_error2/valid_iteration, epoch) ## Plot epoch error2
     return epoch_error2 / valid_iteration
 
 def save_checkpoint(save_path, epoch,state, is_best):
