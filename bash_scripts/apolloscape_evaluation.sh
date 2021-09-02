@@ -1,6 +1,6 @@
 CUDA_VISIBLE_DEVICES=0 python evaluation_apolloscape.py \
-                  --crop_height=960 \
-                  --crop_width=3130 \
+                  --crop_height=288 \
+                  --crop_width=576 \
                   --max_disp=192 \
                   --data_path='./dataset/apolloscape/' \
                   --test_list='lists/apolloscape_test.list' \
