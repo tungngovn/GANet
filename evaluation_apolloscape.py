@@ -210,6 +210,9 @@ if __name__ == "__main__":
 
         prediction = test(leftname, rightname, savename)
         mask = np.logical_and(disp >= 0.001, disp <= opt.max_disp)
+        print('Mask: ', mask.shape)
+        print('prediction shape: ', prediction.shape)
+        print('disparity shape: ', disp.shape)
 
         error = np.mean(np.abs(prediction[mask] - disp[mask]))
         rate = np.sum(np.abs(prediction[mask] - disp[mask]) > opt.threshold) / np.sum(mask)        
