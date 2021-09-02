@@ -218,7 +218,7 @@ if __name__ == "__main__":
         '''
 
         ## Crop gt disparity image
-        _, h_d, w_d=np.shape(disp)
+        h_d, w_d=np.shape(disp)
         start_x_d = int((w_d - opt.crop_width) / 2)
         start_y_d = int((h_d - opt.crop_height) / 2)
         disp = disp[:, start_y_d: start_y_d + opt.crop_height, start_x_d: start_x_d + opt.crop_width]
