@@ -111,6 +111,10 @@ def test_transform(temp_data, crop_height, crop_width):
     else:
         start_x = int((w - crop_width) / 2)
         start_y = int((h - crop_height) / 2)
+        print('start_x: ', start_x)
+        print('start_y: ', start_y)
+        print('end_x: ', start_x + crop_width)
+        print('end_y: ', start_y + crop_height)
         temp_data = temp_data[:, start_y: start_y + crop_height, start_x: start_x + crop_width]
     left = np.ones([1, 3,crop_height,crop_width],'float32')
     left[0, :, :, :] = temp_data[0: 3, :, :]
@@ -221,9 +225,13 @@ if __name__ == "__main__":
         h_d, w_d=np.shape(disp)
         start_x_d = int((w_d - opt.crop_width) / 2)
         start_y_d = int((h_d - opt.crop_height) / 2)
+        print('start_x_d: ', start_x_d)
+        print('start_y_d: ', start_y_d)
+        print('end_x_d: ', start_x_d + opt.crop_width)
+        print('end_y_d: ', start_y_d + opt.crop_height)
         disp = disp[start_y_d: start_y_d + opt.crop_height, start_x_d: start_x_d + opt.crop_width]
-
         ## End crop disparity image
+
         prediction = test(leftname, rightname, savename)
         mask = np.logical_and(disp >= 0.001, disp <= opt.max_disp)
         print('Mask: ', mask.shape)
