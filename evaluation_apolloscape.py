@@ -147,12 +147,21 @@ def test(leftname, rightname, savename):
     input1 = Variable(input1, requires_grad = False)
     input2 = Variable(input2, requires_grad = False)
 
+    ## Print to debug
+    print('input1: ', input1.shape)
+    print('input2: ', input2.shape)
+    print('width: ', width)
+    print('height: ', height)
+    ## End printing
+
     model.eval()
     if cuda:
         input1 = input1.cuda()
         input2 = input2.cuda()
     with torch.no_grad():
         prediction = model(input1, input2)
+
+    print('prediction: ', prediction.shape)
      
     temp = prediction.cpu()
     temp = temp.detach().numpy()
